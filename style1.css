@@ -1,0 +1,82 @@
+:root {
+    --primary-color: #280905;
+    --secondary-color: #740A03;
+    --hightlight-color: #C3110C;
+    --text-color: #333333;
+    --inner-color: #FFFFFF;
+    --h1-size: 32px;
+    --h2-size: 24px;
+    --h3-size: 18px;
+    --h4-size: 16px;
+    --h5-size: 14px;
+}
+
+
+body {
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--inner-color);
+    color: var(--text-color);
+    margin: 100px;
+    margin-top: 5px;
+    padding: 10px;
+    justify-content: center;
+    height: 100vh;
+
+    display: flex;
+    background: url('bg_film3.jpg') no-repeat center center fixed;
+    background-size: cover;
+    background-blend-mode: darken;
+    background-color: rgba(0,0,0,0.5);
+   
+    
+
+}
+
+
+.form-container {
+    width: 400px;
+    padding: 25px;
+    background-color: var(--inner-color);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(31, 30, 30, 0.1);
+    /* background: linear-gradient(to bottom, #ffffff, #b39896, #E50914);
+    color: white; */
+
+}
+
+.title h1 {
+    
+    color: var(--primary-color);
+    font-size: var(--h1-size);
+    text-align: center;
+    margin-top: 10px;
+    
+    font-weight: 700;
+}
+.title h2{
+    margin-top: 0px;
+    font-weight: bold;
+}
+
+.btn.btn-primary.w-100.py-2.fw-bold{
+    background-color: var(--hightlight-color); 
+    color: var(--inner-color);             
+    padding: 12px 20px;       
+    border: none;              
+    border-radius: 8px;        
+    width: 100%;                       
+    cursor: pointer;           
+}
+.form-check-input{
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+}
+
+.btn.btn-outline-dark.w-100.mb-3:hover{
+    background-color: #A80D0D; 
+    border-color: #A80D0D;     
+    color: white;      
+    cursor: pointer;     
+    transition: 0.3s;
+}
