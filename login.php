@@ -1,19 +1,27 @@
 <?php 
 session_start();
-$username="audrey";
-$password="120";
+require "koneksi.php";
 
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $user_in = $_POST["username"];
-    $pass_in = $_POST["password"];
-if ($user_in == $username && $pass_in == $password){
-    $_SESSION['username'] = $user_in;
-    header("location:dashboard.php"); exit();
-}else {
-   
-    die("Anda tidak valid"); exit();
-    }}
+if(isset($_POST['login'])){
+    $username = mysqli_real_escape_string($koneksi, strtolower($_POST['username']));
+    $password = mysqli_real_escape_string($koneksi, $_POST['password']);
+    $query=mysqli_query($koneksi, "SELECT*FROM user WHERE username='$username' AND password='$password'");
+    $cek_jml=mysqli_num_rows($query);
+    if($cek_jml>0){
+        $data=mysqli_fetch_array($query);
+        $_SESSION['user']=$data['username'];
+        $_SESSION['userID']=$data['id_user'];
+        $_SESSION['status']='login';
+        header("location: dashboard.php"); exit();
+    }else{
+        
+$_SESSION['flash_message'] = "username atau password ada yg salah!";
+header('Location: login.php'); 
+exit();
+
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -43,38 +51,39 @@ if ($user_in == $username && $pass_in == $password){
   <path d="M9 6a3 3 0 1 0 0-6 3 3 0 0 0 0 6M7 3a2 2 0 1 1 4 0 2 2 0 0 1-4 0"/>
 </svg>
         </h1>
-        <h2 style="color: var(--hightlight-color);">Login</h2>
-        <p class="text-muted">Enter your details to continue</p>
+        <h2 style="color: var(--hightlight-color);">Masuk</h2>
+        <p class="text-muted">Masukan informasimu</p>
     </div>
 
 
 
-    <form action="dashboard.php" method="POST">
+    <form action="" method="POST">
         
         <div class="form-floating mb-3">
             <input type="text" class="form-control" name="username" id="floatingUsername" placeholder="Username" required>
-            <label for="floatingUsername">Username</label>
+            <label for="floatingUsername">Nama pengguna</label>
         </div>
 
         <div class="form-floating mb-3">
             <input type="password" class="form-control" name="password" id="floatingPassword" placeholder="Password" required>
-            <label for="floatingPassword">Password</label>
+            <label for="floatingPassword">Kata sandi</label>
         </div> 
 
         <div class="d-flex justify-content-between align-items-center mb-4">
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="rememberMe">
-                <label class="form-check-label" for="rememberMe">Remember me</label>
+                <label class="form-check-label" for="rememberMe">Ingat saya</label>
             </div>
-            <a href="#" class="text-decoration-none small">Need Help?</a>
+            <a href="#" class="text-decoration-none small">Butuh bantuan?</a>
         </div>
 
-        <button type="submit" class="btn btn-primary w-100 py-2 fw-bold">Sign In</button>
         
-    </form> <div class="text-center my-3 text-muted small">OR</div>
-    <button type="button" class="btn btn-outline-dark w-100 mb-3" >
-        <i class="bi bi-google"></i> Login with Google
-    </button>
+  <a href="dashboard.php"><button type="submit" class="btn btn-primary w-100 py-2 fw-bold" name="login">Log In</button></a>
+        
+    </form> 
+     <div class="text-center my-3 text-muted small">Belum punya akun?</div>
+        
+    <a href="regist.php" class="btn btn-outline-dark w-100 mb-3">Daftar di sini</a>
 
     
 </div>

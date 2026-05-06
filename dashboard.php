@@ -1,8 +1,18 @@
 <?php 
 session_start();
-if(!isset ($_SESSION['username'])){
-    header("Location:index.php"); exit();
+require "koneksi.php";
+if(!isset ($_SESSION['status'])|| $_SESSION['status'] != 'login'){
+    echo "<script> alert('Log In dulu dong!'); 
+            location.href = 'login.php';
+        </script>";
 }
+$id_user_log = $_SESSION['userID'];
+$query=mysqli_query($koneksi,"SELECT*FROM film");
+
+
+
+
+
 ?>
 
 
@@ -32,7 +42,7 @@ if(!isset ($_SESSION['username'])){
           <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
           <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
         </svg>
-        <span><?php echo $_SESSION['username'];?></span>
+        <span><?= $_SESSION['user'];?></span>
     </div>
 </nav>
 
@@ -49,92 +59,44 @@ if(!isset ($_SESSION['username'])){
         </h3>
 
         <p class="desk" align="center" style="font-weight: lighter; font-size: 30px;">
-            Selamat Datang <?php echo $_SESSION['username']; ?> !
+            Selamat Datang <?= $_SESSION['user']; ?> !
         </p>
         <p class="desk" align="center">
             Ruang kreasi dan eksplorasi sinema ada di tanganmu. Temukan inspirasi, bedah struktur cerita, dan mulai petualangan filmmu hari ini.
         </p>
     </div>
     <div class="gradient-line"></div>
+    
     <div class="list">
         <div class="movieku">
+             <?php while($data=mysqli_fetch_assoc($query)){?>
             <div class="movie" id="movie1">
-                <img src="posterfilm_1.jpg" alt="Enola Holmes" width="150" height="230" class="gambar">
+                <img src="<?= $data['gambar']?>" alt="<?= $data['judul_film']?>" width="150" height="230" class="gambar">
                 <div class="desc">
-                    <h4>Enola Holmes</h4>
-                    <p class="genre">Action / Adventure / Fiction</p>
-                    <p class="rate">Rate: 8.6</p>
-                    <p class="harga">Rp. 70.000</p>
-                    <p class="durasi">Durasi: 129 menit</p>
-                    <p class="tayang">Tayang pada pukul: 20.00</p>
-                    <p class="singkat">
-                        Aksi cerdik adik remaja Sherlock Holmes dalam petualangan mencari ibunya yang hilang dan memecahkan konspirasi besar.
+                    <h4><?= $data['judul_film']?></h4>
+                    <p class="genre"><?= $data['genre']?></p>
+                    <p class="rate"><?= $data['rate']?></p>
+                    <p class="harga">Rp.<?= $data['harga']?></p>
+                    <p class="durasi">Durasi: <?= $data['durasi']?></p>
+                    <p class="tayang">Tayang pada pukul: <?= $data['jam_tayang']?></p>
+                    <p class="singkat"><?= $data['deskripsi']?>
                     </p>
                 </div>
             </div>
-            <div class="movie" id="movie2">
-                <img src="posterfilm_2.jpg" alt="Wednesday" width="150" height="230" class="gambar">
-                <div class="desc">
-                    <h4>Wednesday</h4>
-                    <p class="genre">Fiction / Horror</p>
-                    <p class="rate">Rate: 8.2</p>
-                    <p class="harga">Rp. 100.000</p>
-                    <p class="durasi">Durasi: 60 menit</p>
-                    <p class="tayang">Tayang pada pukul: 21.00</p>
-                    <p class="singkat">
-                        Gadis remaja misterius dengan kemampuan psikis yang mencoba mengungkap misteri pembunuhan berantai di Akademi Nevermore.
-                    </p>
-                </div>
-            </div>
-            <div class="movie" id="movie3">
-                <img src="posterfilm_3.jpg" alt="Queen's Gambit" width="150" height="230" class="gambar">
-                <div class="desc">
-                    <h4>Queen's Gambit</h4>
-                    <p class="genre">Drama / Roman</p>
-                    <p class="rate">Rate: 8.7</p>
-                    <p class="harga">Rp. 50.000</p>
-                    <p class="durasi">Durasi: 60 menit</p>
-                    <p class="tayang">Tayang pada pukul: 17.00</p>
-                    <p class="singkat">
-                        Perjalanan seorang yatim piatu jenius catur yang berjuang melawan trauma dan kecanduan demi menjadi pemain terbaik dunia.
-                    </p>
-                </div>
-            </div>
-            <div class="movie" id="movie4">
-                <img src="posterfilm_4.jpg" alt="Mencuri Raden Saleh" width="150" height="230" class="gambar">
-                <div class="desc">
-                    <h4>Mencuri Raden Saleh</h4>
-                    <p class="genre">Drama / History</p>
-                    <p class="rate">Rate: 8.0</p>
-                    <p class="harga">Rp. 50.000</p>
-                    <p class="durasi">Durasi: 154 menit</p>
-                    <p class="tayang">Tayang pada pukul: 14.00</p>
-                    <p class="singkat">
-                        Sekelompok anak muda amatir merencanakan pencurian terbesar abad ini mencuri lukisan bersejarah karya Raden Saleh di Istana Negara.
-                    </p>
-                </div>
-            </div>
-            <div class="movie" id="movie5">
-                <img src="posterfilm_5.jpg" alt="Home Sweet Loan" width="150" height="230" class="gambar">
-                <div class="desc">
-                    <h4>Home Sweet Loan</h4>
-                    <p class="genre">Drama / Family</p>
-                    <p class="rate">Rate: 8.0</p>
-                    <p class="harga">Rp. 50.000</p>
-                    <p class="durasi">Durasi: 105 menit</p>
-                    <p class="tayang">Tayang pada pukul: 18.00</p>
-                    <p class="singkat">
-                        Perjuangan seorang pekerja kelas menengah yang terjebak dalam dilema sandwich generation demi mewujudkan impian memiliki rumah sendiri.
-                    </p>
-                </div>
-            </div>
-
+            
+<?php }?>
         </div>
     </div>
 
     <div class="regist">
         <form action="form_pesanan.php">
             <button type="submit">Pesan Sekarang</button>
+        </form>
+    </div>
+
+    <div class="regist">
+        <form action="logout.php">
+            <button type="submit">Keluar</button>
         </form>
     </div>
 
